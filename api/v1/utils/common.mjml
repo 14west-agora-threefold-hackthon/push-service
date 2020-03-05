@@ -1,0 +1,15 @@
+<mjml>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+        <mj-image width="700px" src="https://i.ibb.co/h193zdz/af-header.png"></mj-image>
+        <mj-image width="100px" src="https://i.ibb.co/HxhmNd4/expired-icon-2x.png"></mj-image>
+        <mj-text font-size="20px" color="#093148" font-family="arial">Hello {{customerFirstName}}</mj-text>
+        <mj-text font-size="20px" color="#093148" font-family="arial">Your credit card on file has expired and your subscription is set up to renew in 2 months</mj-text>
+        <mj-text font-size="20px" color="#093148" font-family="arial">To keep receiving the content you love from Agora Financial please update your credit card info.</mj-text>
+        <mj-button background-color="#093148" font-size="15px" font-size="20px" href="#"> UPDATE CREDIT CARD</mj-button>
+        <mj-divider border-color="#093148"></mj-divider>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

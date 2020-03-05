@@ -1,0 +1,133 @@
+{
+  "apiVersion": "apps.openshift.io/v1",
+  "kind": "DeploymentConfig",
+  "metadata": {
+    "labels": {
+      "app": "push-service",
+      "name": "push-service"
+    },
+    "name": "push-service"
+  },
+  "spec": {
+    "replicas": 1,
+    "revisionHistoryLimit": 10,
+    "selector": {
+      "name": "push-service"
+    },
+    "strategy": {
+      "activeDeadlineSeconds": 21600,
+      "resources": {},
+      "rollingParams": {
+        "intervalSeconds": 1,
+        "maxSurge": "25%",
+        "maxUnavailable": "25%",
+        "timeoutSeconds": 600,
+        "updatePeriodSeconds": 1
+      },
+      "type": "Rolling"
+    },
+    "template": {
+      "metadata": {
+        "labels": {
+          "app": "push-service",
+          "name": "push-service"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "env": [
+              {
+                "name": "NAME",
+                "value": "push"
+              },
+              {
+                "name": "PUSH_SERICE_MONGODB_SERVICE_HOST",
+                "value": "mongodb"
+              },
+              {
+                "name": "PUSH_SERICE_ENV",
+                "value": "development"
+              },
+              {
+                "name": "PUSH_SERVICE_MONGODB_PASSWORD",
+                "valueFrom": {
+                  "secretKeyRef": {
+                    "key": "database-admin-password",
+                    "name": "mongodb"
+                  }
+                }
+              },
+              {
+                "name": "PUSH_SERVICE_MONGODB_AFFILIATE_USER",
+                "valueFrom": {
+                  "secretKeyRef": {
+                    "key": "database-user",
+                    "name": "mongodb"
+                  }
+                }
+              },
+              {
+                "name": "PUSH_SERVICE_MONGODB_AFFILIATE_PASSWORD",
+                "valueFrom": {
+                  "secretKeyRef": {
+                    "key": "database-password",
+                    "name": "mongodb"
+                  }
+                }
+              },
+              {
+                "name": "PUSH_SERVICE_NOOP",
+                "value": "noop"
+              }
+            ],
+            "image": "bazm0/push-service:1.0.0",
+            "imagePullPolicy": "Always",
+            "name": "push-service",
+            "ports": [
+              {
+                "containerPort": 3000,
+                "protocol": "TCP"
+              }
+            ],
+            "resources": {
+              "limits": {
+                "cpu": "200m",
+                "memory": "200Mi"
+              },
+              "requests": {
+                "cpu": "10m",
+                "memory": "50Mi"
+              }
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File"
+          }
+        ],
+        "dnsPolicy": "ClusterFirst",
+        "imagePullSecrets": [
+          {
+            "name": "artifactory.registry"
+          }
+        ],
+        "restartPolicy": "Always",
+        "schedulerName": "default-scheduler",
+        "securityContext": {},
+        "terminationGracePeriodSeconds": 30
+      }
+    },
+    "test": false,
+    "triggers": [
+      {
+        "type": "ConfigChange"
+      }
+    ]
+  },
+  "status": {
+    "latestVersion": 0,
+    "observedGeneration": 0,
+    "replicas": 0,
+    "unavailableReplicas": 0,
+    "updatedReplicas": 0
+  }
+}

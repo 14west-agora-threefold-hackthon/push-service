@@ -1,0 +1,9 @@
+{
+  "file": ["./tests/helpers/tearUp.js", "./tests/helpers/tearDown.js"],
+  "timeout": 3000,
+  "ui": "bdd",
+  "exit": true,
+  "retries": 0,
+  "slow": 75,
+  "check-leaks": true
+}
