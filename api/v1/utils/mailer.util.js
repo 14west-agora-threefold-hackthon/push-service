@@ -6,7 +6,7 @@ const { conf } = require('../../../config/env');
 
 const eventTypes = { EXPIRED: 'EXPIRED', LOST_OR_STOLEN: 'LOST_OR_STOLEN' };
 
-const client = new postmark.ServerClient('5c7eb5c1-b045-4516-bda8-3d83ffcfca3b');
+const client = new postmark.ServerClient(conf.store.POSTMARK_API_KEY);
 
 const send = content => {
   const eventType =
@@ -56,7 +56,7 @@ const send = content => {
 
   client.sendEmail({
     From: conf.store.MAILER_FROM_EMAIL,
-    To: content.customerEmail,
+    To: conf.store.MAILER_TO_EMAIL ? conf.store.MAILER_TO_EMAIL : content.customerEmail,
     Subject: titles[eventType],
     HtmlBody: html
   });
@@ -65,28 +65,3 @@ const send = content => {
 module.exports = {
   send
 };
-
-// const options = {
-//   method: 'POST',
-//   uri: 'https://api.postmarkapp.com/email',
-//   headers: {
-//     Accept: 'application/json',
-//     'Content-Type': 'application/json',
-//     'X-Postmark-Server-Token': 'server token'
-//   },
-//   body: JSON.stringify({
-//     To: 'example@example.com',
-//     From: 'example2@example.com',
-//     Subject: 'This is a test',
-//     HtmlBody: html
-//   }),
-//   json: true
-// };
-
-// rp(options)
-//   .then(parsedBody => {
-//     console.log('mailer::: ', parsedBody);
-//   })
-//   .catch(err => {
-//     console.error('mailer::: ', err);
-//   });

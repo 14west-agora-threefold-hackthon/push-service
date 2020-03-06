@@ -6,5 +6,6 @@ module.exports = {
   MONGODB_SERVICE_PORT: '27017',
   MONGODB_CONNECTION_DB: 'testdatabase',
   RETRY_COUNT: 0,
-  MAILER_FROM_EMAIL: 'bquigley@tfd.ie'
+  MAILER_FROM_EMAIL: 'bquigley@tfd.ie',
+  POSTMARK_API_KEY: '5c7eb5c1-b045-4516-bda8-3d83ffcfca3b'
 };
